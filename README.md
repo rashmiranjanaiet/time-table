@@ -1,82 +1,173 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+🚀 My Performance Hub
 
-# My Performance Hub (Full Stack Local Setup)
+A full-stack web application built using React + Vite (Frontend) and Node.js + Express (Backend) with Gemini API integration, JWT-based authentication, and per-user local data storage.
 
-This project now runs with:
-- Frontend: Vite + React (`http://localhost:3000`)
-- Backend: Express API for Gemini (`http://localhost:8787`)
+📌 Tech Stack
+🖥 Frontend
 
-## Prerequisites
-- Node.js 18+
-- Gemini API key
+React
 
-## 1) Install dependencies
+Vite
 
-```bash
+Axios
+
+React Router
+
+Recharts (for analytics/graphs)
+
+⚙ Backend
+
+Node.js
+
+Express.js
+
+JWT (Authentication)
+
+bcrypt (Password hashing)
+
+Gemini API (AI integration)
+
+Local JSON Database (backend/data/db.json)
+
+✨ Features
+
+🔐 JWT-based Login & Registration
+
+👤 Per-user data isolation
+
+📊 Performance analytics dashboard
+
+🤖 AI-powered insights using Gemini API
+
+💾 Local JSON file storage
+
+⚡ Fast Vite development setup
+
+🌙 Dark mode support (if enabled)
+
+📁 Project Structure
+my-performance-hub/
+│
+├── frontend/               # React + Vite app
+│   ├── src/
+│   ├── index.html
+│   └── vite.config.js
+│
+├── backend/
+│   ├── routes/
+│   ├── middleware/
+│   ├── controllers/
+│   ├── data/
+│   │   └── db.json
+│   └── server.js
+│
+└── README.md
+
+🔧 Installation & Setup
+1️⃣ Clone the Repository
+git clone https://github.com/your-username/my-performance-hub.git
+cd my-performance-hub
+
+2️⃣ Backend Setup
+cd backend
 npm install
-```
 
-## 2) Configure backend environment
 
-Create `backend/.env` from `backend/.env.example` and set your key:
+Create a .env file inside backend:
 
-```env
-GEMINI_API_KEY=your_gemini_api_key_here
-PORT=8787
-CLIENT_ORIGIN=http://localhost:3000
-JWT_SECRET=replace_with_a_long_random_secret
-```
+PORT=5000
+JWT_SECRET=your_secret_key
+GEMINI_API_KEY=your_gemini_api_key
 
-## 3) Run frontend + backend together
 
-```bash
+Run backend:
+
+npm start
+
+
+Server runs at:
+
+http://localhost:5000
+
+3️⃣ Frontend Setup
+cd frontend
+npm install
 npm run dev
-```
 
-## Local URLs
-- App: `http://localhost:3000`
-- API health: `http://localhost:8787/api/health`
 
-## Login and data persistence
-- Register or login from the app screen.
-- Your tasks and stats are saved per user in `backend/data/db.json`.
-- When you login again with the same account, your past data loads automatically.
+App runs at:
 
-## Optional frontend env
-By default the frontend uses Vite proxy (`/api -> http://localhost:8787`).
-If you need a direct API base URL, create `.env.local` with:
+http://127.0.0.1:5173
 
-```env
-VITE_API_BASE_URL=http://localhost:8787
-```
+🔐 Authentication Flow
 
-## Deploy both frontend + backend on Render
-Create 2 services from the same GitHub repo.
+User registers
 
-1. Backend service (Render `Web Service`)
-- Root Directory: repo root
-- Build Command: `npm install`
-- Start Command: `node backend/server.js`
-- Environment Variables:
+Password is hashed using bcrypt
 
-```env
-GEMINI_API_KEY=your_real_key
-JWT_SECRET=generate_a_long_random_secret
-CLIENT_ORIGIN=https://your-frontend-name.onrender.com
-```
+JWT token is generated
 
-2. Frontend service (Render `Static Site`)
-- Root Directory: repo root
-- Build Command: `npm install && npm run build`
-- Publish Directory: `dist`
-- Environment Variables:
+Token stored in frontend (localStorage)
 
-```env
-VITE_API_BASE_URL=https://your-backend-name.onrender.com
-```
+Protected routes validated via middleware
 
-3. CORS note
-- If you use multiple frontend domains, backend `CLIENT_ORIGIN` can be comma-separated:
-  `https://your-frontend.onrender.com,https://your-custom-domain.com`
+🤖 Gemini API Integration
+
+Sends user performance data
+
+Receives AI-generated suggestions
+
+Displays AI insights on dashboard
+
+💾 Data Storage
+
+All user data stored in:
+
+backend/data/db.json
+
+
+Structured per user
+
+No external database required
+
+📊 Dashboard
+
+Performance tracking
+
+Graph visualization
+
+AI recommendations
+
+User-based data isolation
+
+🛡 Security Features
+
+Password hashing
+
+JWT authentication
+
+Protected backend routes
+
+Environment variable protection
+
+🚀 Future Improvements
+
+MongoDB integration
+
+Role-based authentication
+
+Deployment (Render/Vercel)
+
+Refresh token system
+
+Cloud storage integration
+
+👨‍💻 Author
+
+Rashmi Ranjan
+Computer Science Student
+Full-Stack Developer
+
+📄 License
+
+This project is for educational and development purposes.
