@@ -378,11 +378,16 @@ app.post("/api/insights", async (req, res) => {
 });
 
 if (fs.existsSync(distDir)) {
-  app.use(express.static(distDir));
+  app.use(express.static(distDir, { index: false }));
 
   app.get(/^(?!\/api).*/, (req, res, next) => {
     if (req.path.startsWith("/api")) {
       return next();
+    }
+    // Don't serve index.html for missing files like /assets/*.js or /favicon.ico.
+    // Returning HTML for JS requests causes a blank app due to module MIME errors.
+    if (req.path.includes(".")) {
+      return res.status(404).end();
     }
     return res.sendFile(path.join(distDir, "index.html"));
   });
