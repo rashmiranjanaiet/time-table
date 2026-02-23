@@ -17,10 +17,12 @@ import {
 } from "./storage.js";
 
 dotenv.config({ path: "backend/.env" });
+dotenv.config();
 
 const app = express();
 const port = Number(process.env.PORT) || 8787;
-const clientOrigin = process.env.CLIENT_ORIGIN || "http://localhost:3000";
+const clientOrigin =
+  process.env.CLIENT_ORIGIN || process.env.RENDER_EXTERNAL_URL || "http://localhost:3000";
 const apiKey = process.env.GEMINI_API_KEY;
 const jwtSecret = process.env.JWT_SECRET || "change_this_in_backend_env";
 const allowedOrigins = clientOrigin
@@ -160,7 +162,7 @@ app.put("/api/user/data", authRequired, async (req, res) => {
 const ensureAiConfigured = (res) => {
   if (!ai) {
     res.status(500).json({
-      error: "Backend is missing GEMINI_API_KEY. Set it in backend/.env.",
+      error: "Backend is missing GEMINI_API_KEY. Set it in Render env or backend/.env.",
     });
     return false;
   }
@@ -395,4 +397,7 @@ if (fs.existsSync(distDir)) {
 
 app.listen(port, () => {
   console.log(`Backend listening on http://localhost:${port}`);
+  if (process.env.RENDER_EXTERNAL_URL) {
+    console.log(`Render URL: ${process.env.RENDER_EXTERNAL_URL}`);
+  }
 });

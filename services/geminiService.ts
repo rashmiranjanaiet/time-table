@@ -1,6 +1,5 @@
 import { Task, WeeklyStats, AspectRatio, ImageSize } from "../types";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+import { API_BASE_URL } from "./apiBase";
 
 const apiRequest = async <T>(path: string, body: unknown): Promise<T> => {
   const response = await fetch(`${API_BASE_URL}${path}`, {
