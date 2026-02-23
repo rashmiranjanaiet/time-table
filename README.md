@@ -171,3 +171,9 @@ Full-Stack Developer
 📄 License
 
 This project is for educational and development purposes.
+
+Render one-service deployment:
+- Build Command: `npm install && npm run build`
+- Start Command: `npm start`
+- App URL: `https://<your-service>.onrender.com/`
+- API URL: `https://<your-service>.onrender.com/api/health`

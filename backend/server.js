@@ -1,9 +1,12 @@
 import crypto from "crypto";
+import fs from "fs";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import path from "path";
+import { fileURLToPath } from "url";
 import { GoogleGenAI, Modality } from "@google/genai";
 import {
   createUser,
@@ -26,6 +29,9 @@ const allowedOrigins = clientOrigin
   .filter(Boolean);
 
 const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const distDir = path.resolve(__dirname, "../dist");
 
 app.use(
   cors({
@@ -370,6 +376,17 @@ app.post("/api/insights", async (req, res) => {
     return res.status(500).json({ error: "Failed to generate insights" });
   }
 });
+
+if (fs.existsSync(distDir)) {
+  app.use(express.static(distDir));
+
+  app.get(/^(?!\/api).*/, (req, res, next) => {
+    if (req.path.startsWith("/api")) {
+      return next();
+    }
+    return res.sendFile(path.join(distDir, "index.html"));
+  });
+}
 
 app.listen(port, () => {
   console.log(`Backend listening on http://localhost:${port}`);
