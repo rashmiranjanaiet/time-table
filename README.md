@@ -51,3 +51,32 @@ If you need a direct API base URL, create `.env.local` with:
 ```env
 VITE_API_BASE_URL=http://localhost:8787
 ```
+
+## Deploy both frontend + backend on Render
+Create 2 services from the same GitHub repo.
+
+1. Backend service (Render `Web Service`)
+- Root Directory: repo root
+- Build Command: `npm install`
+- Start Command: `node backend/server.js`
+- Environment Variables:
+
+```env
+GEMINI_API_KEY=your_real_key
+JWT_SECRET=generate_a_long_random_secret
+CLIENT_ORIGIN=https://your-frontend-name.onrender.com
+```
+
+2. Frontend service (Render `Static Site`)
+- Root Directory: repo root
+- Build Command: `npm install && npm run build`
+- Publish Directory: `dist`
+- Environment Variables:
+
+```env
+VITE_API_BASE_URL=https://your-backend-name.onrender.com
+```
+
+3. CORS note
+- If you use multiple frontend domains, backend `CLIENT_ORIGIN` can be comma-separated:
+  `https://your-frontend.onrender.com,https://your-custom-domain.com`

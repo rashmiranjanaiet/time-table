@@ -20,10 +20,23 @@ const port = Number(process.env.PORT) || 8787;
 const clientOrigin = process.env.CLIENT_ORIGIN || "http://localhost:3000";
 const apiKey = process.env.GEMINI_API_KEY;
 const jwtSecret = process.env.JWT_SECRET || "change_this_in_backend_env";
+const allowedOrigins = clientOrigin
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
-app.use(cors({ origin: clientOrigin }));
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes("*") || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`Origin not allowed by CORS: ${origin}`));
+    },
+  })
+);
 app.use(express.json({ limit: "25mb" }));
 
 const sanitizeUser = (user) => ({
